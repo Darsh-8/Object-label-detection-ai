@@ -1,90 +1,151 @@
-# Object & Label Detection Dashboard
+# 📸 Object & Label Detection Dashboard
 
-A Flask-based web application that lets you upload images, automatically detects objects & labels using AWS Rekognition, stores metadata in DynamoDB, and provides a searchable dashboard.
+![Python Version](https://img.shields.io/badge/python-3.8+-blue) ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+
+A Flask-based web app to upload images, auto-detect objects and labels using AWS Rekognition, store metadata in DynamoDB, and explore results on a searchable dashboard.
+
+## 🖼️ Screenshots
+
+![Dashboard Screenshot](https://drive.google.com/uc?export=view&id=14JuLLgbpOFt4x07DPduIMPvF5u8pV_3C)
 
 ## 🌟 Features
 
-- Image upload & storage in AWS S3
-- Automated label detection via AWS Rekognition
-- Manual tag input for custom metadata
-- Metadata storage & retrieval in DynamoDB
-- Search & filter by detected labels or manual tags
-- Dashboard stats: total images, most common label, total manual tags
-- RESTful API endpoint for stats (`/api/stats`)
+*   Upload images and store in **AWS S3**
+*   Auto-detect labels using **Rekognition**
+*   Add manual tags for custom labeling
+*   Store all metadata in **DynamoDB**
+*   Search & filter images by labels or tags
+*   Dashboard stats: total images, most common label, total manual tags
+*   RESTful API for stats (`/api/stats`)
 
 ## 🛠️ Tech Stack
 
-- Back-end: Python, Flask
-- Front-end: HTML5, CSS3 (in-template styling)
-- AWS Services: S3, Rekognition, DynamoDB
-- Dependencies managed via `requirements.txt`
-- Environment variables via `python-dotenv`
+*   **Back-end:** Python, Flask
+*   **Front-end:** HTML5, CSS3 (inline styling)
+*   **Cloud:** AWS S3, Rekognition, DynamoDB
+*   **Env Mgmt:** `python-dotenv`
+*   **Deps:** `requirements.txt`
 
 ## 🔧 Prerequisites
 
-- Python 3.8+ installed
-- AWS account with IAM user having S3, Rekognition & DynamoDB permissions
-- Configured AWS credentials (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION`)
-- An S3 bucket named `object-rekognition-images` (or adjust `BUCKET_NAME`)
-- A DynamoDB table named `ImageLabels` with `ImageName` as primary key
+*   Python 3.8+ installed
+*   AWS account with S3, Rekognition & DynamoDB permissions
+*   Configured AWS credentials via environment variables
+*   An S3 bucket named `object-rekognition-images`
+*   A DynamoDB table `ImageLabels` with `ImageName` as primary key
 
 ## ⚙️ Installation & Setup
 
-    python git clone https://github.com/Darsh-8/objectandlabeldetection.git
-    python cd object-and-label-detection
-    python python3 -m venv venv
-    python source venv/bin/activate          <!-- on Windows: venv\Scripts\activate -->
-    pip install -r requirements.txt
+```bash
+git clone https://github.com/Darsh-8/objectandlabeldetection.git
+```
 
-Create a `.env` file in the project root:
+```bash
+cd objectandlabeldetection
+```
 
-    AWS_ACCESS_KEY_ID=YOUR_ACCESS_KEY
-    AWS_SECRET_ACCESS_KEY=YOUR_SECRET_KEY
-    AWS_DEFAULT_REGION=ap-south-1
+```bash
+python3 -m venv venv
+```
+
+```bash
+source venv/bin/activate
+```
+
+```bash
+# On Windows: venv\Scripts\activate
+```
+
+```bash
+pip install -r requirements.txt
+```
+
+**Create a `.env` file:**
+
+```
+AWS_ACCESS_KEY_ID=YOUR_ACCESS_KEY
+AWS_SECRET_ACCESS_KEY=YOUR_SECRET_KEY
+AWS_DEFAULT_REGION=ap-south-1
+```
 
 ## 🚀 Running the App
 
-    export FLASK_APP=app.py
-    export FLASK_ENV=development     <!-- optional: enables debug mode -->
-    flask run                       <!-- by default runs on http://127.0.0.1:5000 -->
+```bash
+export FLASK_APP=app.py
+```
 
-Or simply:
+```bash
+export FLASK_ENV=development
+```
 
-    python app.py
+```bash
+flask run
+```
+
+**Or simply:**
+
+```bash
+python app.py
+```
 
 ## 📂 Project Structure
 
-    object-label-detection-ai/
-    ├── aws_handlers/
-    │   └── aws_functions.py
-    ├── app.py
-    ├── config.py
-    └── templates/
-        └── index.html
-    requirements.txt
-    README.md                   
+```
+
+object-label-detection-ai/
+├── aws_handlers/
+│   └── aws_functions.py       # AWS integration logic
+├── app.py                     # Flask app runner
+├── config.py                  # AWS keys and config
+├── templates/
+│   └── index.html             # Dashboard UI
+├── requirements.txt
+├── README.md
+```
 
 ## 🔍 Usage Examples
 
-- Upload an image via the dashboard to auto-detect labels.
-- Enter comma-separated manual tags to augment Rekognition labels.
-- Search images by label or manual tag using the search bar.
-- View stats JSON: `GET /api/stats` returns:
+*   Upload an image to auto-detect labels
+*   Enter comma-separated manual tags
+*   Search for images by label or tag
+*   API: `GET /api/stats`
 
-      {
-        "total_images": 42,
-        "most_common_label": "Person",
-        "total_manual_tags": 17
-      }
+```json
+
+{
+  "total_images": 42,
+  "most_common_label": "Person",
+  "total_manual_tags": 17
+}
+```
+
+## 🚫 No Live Deployment
+
+This application is currently **not hosted online**. To use it, follow the setup steps and run it locally.
+
+## ⚠️ Limitations
+
+*   No video or batch uploads — only single image upload
+*   No confidence threshold control for label filtering
+*   Dashboard lacks pagination or delete functionality
+*   Open access — no user authentication or roles
+
+## 🗺️ Roadmap
+
+*   Add pagination to dashboard
+*   Enable threshold-based filtering for labels
+*   Add image delete functionality
+*   Introduce user authentication (login/signup)
+*   Allow export of metadata (CSV or JSON)
 
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome! Feel free to fork the repo and submit a pull request.
+Pull requests, issues, and forks are welcome. Feel free to improve features or fix bugs by submitting a PR.
 
 ## 📄 License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Licensed under the MIT License. See `LICENSE` for more details.
 
----
+- - -
 
-Built with ❤️ using Flask & AWS Rekognition
+Built with ❤️ by [Darsh Thakkar](https://github.com/Darsh-8) using Flask & AWS Rekognition.

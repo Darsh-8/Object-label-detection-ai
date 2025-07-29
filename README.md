@@ -53,10 +53,6 @@ source venv/bin/activate
 ```
 
 ```bash
-# On Windows: venv\Scripts\activate
-```
-
-```bash
 pip install -r requirements.txt
 ```
 

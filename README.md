@@ -55,13 +55,13 @@ Or simply:
 ## 📂 Project Structure
 
     objectandlabeldetection/
-    ├── app.py                  <!-- Main Flask application -->
-    ├── aws_functions.py        <!-- S3, Rekognition & DynamoDB helpers -->
-    ├── config.py               <!-- Loads AWS creds from .env -->
+    ├── app.py                  
+    ├── aws_functions.py        
+    ├── config.py               
     └── templates/
-        └── index.html          <!-- Dashboard & upload page -->
-    requirements.txt            <!-- Python dependencies -->
-    README.html                 <!-- This file -->
+        └── index.html          
+    requirements.txt            
+    README.md                   
 
 ## 🔍 Usage Examples
 

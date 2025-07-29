@@ -54,13 +54,14 @@ Or simply:
 
 ## 📂 Project Structure
 
-    objectandlabeldetection/
-    ├── app.py                  
-    ├── aws_functions.py        
-    ├── config.py               
+    object-label-detection-ai/
+    ├── aws_handlers/
+    │   └── aws_functions.py
+    ├── app.py
+    ├── config.py
     └── templates/
-        └── index.html          
-    requirements.txt            
+        └── index.html
+    requirements.txt
     README.md                   
 
 ## 🔍 Usage Examples

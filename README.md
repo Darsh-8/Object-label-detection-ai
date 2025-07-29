@@ -30,19 +30,17 @@ A Flask-based web application that lets you upload images, automatically detects
 
 ## ⚙️ Installation & Setup
 
-    git clone https://github.com/your-username/object-and-label-detection.git
-    cd object-and-label-detection
-    python3 -m venv venv
-    source venv/bin/activate          <!-- on Windows: venv\Scripts\activate -->
+    python git clone https://github.com/Darsh-8/objectandlabeldetection.git
+    python cd object-and-label-detection
+    python python3 -m venv venv
+    python source venv/bin/activate          <!-- on Windows: venv\Scripts\activate -->
     pip install -r requirements.txt
-
 
 Create a `.env` file in the project root:
 
     AWS_ACCESS_KEY_ID=YOUR_ACCESS_KEY
     AWS_SECRET_ACCESS_KEY=YOUR_SECRET_KEY
     AWS_DEFAULT_REGION=ap-south-1
-
 
 ## 🚀 Running the App
 
@@ -77,7 +75,6 @@ Or simply:
         "most_common_label": "Person",
         "total_manual_tags": 17
       }
-
 
 ## 🤝 Contributing
 

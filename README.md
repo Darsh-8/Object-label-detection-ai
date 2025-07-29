@@ -1,5 +1,3 @@
-Object & Label Detection Dashboard
-
 # Object & Label Detection Dashboard
 
 A Flask-based web application that lets you upload images, automatically detects objects & labels using AWS Rekognition, stores metadata in DynamoDB, and provides a searchable dashboard.

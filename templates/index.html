@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Object & Label Detection Dashboard</title>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #000000;
+            --card-bg: #f5f5f5;
+            --badge-bg: #0078d7;
+            --badge-text: #fff;
+        }
+
+        .dark {
+            --bg: #121212;
+            --text: #e0e0e0;
+            --card-bg: #1e1e1e;
+            --badge-bg: #444;
+            --badge-text: #eee;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 2rem;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        input[type="file"],
+        input[type="text"] {
+            flex: 1 1 auto;
+            padding: 0.6rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        input[type="submit"], button {
+            padding: 0.6rem 1rem;
+            background: #0078d7;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            min-height: 400px;
+        }
+
+        .card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 0.8rem;
+        }
+
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge {
+            background: var(--badge-bg);
+            color: var(--badge-text);
+            padding: 0.3rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+        }
+
+        .toggle {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1rem;
+        }
+
+        small {
+            font-size: 0.8rem;
+            color: var(--text);
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="toggle">
+        <button onclick="toggleDarkMode()">🌙 Toggle Dark Mode</button>
+    </div>
+    <h1>Object & Label Detection Dashboard</h1>
+
+    <div class="stats">
+        <div><strong>Total Images:</strong> {{ total_images }}</div>
+        <div><strong>Most Common Label:</strong> {{ most_common_label }}</div>
+        <div><strong>Distinct Manual Tags:</strong> {{ total_manual_tags }}
+        </div>
+    </div>
+
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <input type="text" name="manual_tags"
+               placeholder="Comma separated tags">
+        <input type="submit" value="Upload">
+    </form>
+
+    <form method="get">
+        <input type="text" name="search" placeholder="Search by label or tag">
+        <input type="submit" value="Search">
+    </form>
+
+    <div class="grid">
+        {% for image in images %}
+            <div class="card">
+                <img src="https://{{ BUCKET_NAME }}.s3.{{ AWS_DEFAULT_REGION }}.amazonaws.com/{{ image.ImageName }}"
+                     alt="Image"/>
+
+                <div>
+                    <div class="badges">
+                        {% for label in image.Labels %}
+                            <div class="badge">{{ label }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="badges">
+                        {% for tag in image.ManualTags %}
+                            <div class="badge">{{ tag }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <small>{{ image.Timestamp }}</small>
+                <form action="/delete/{{ image.ImageName }}" method="post">
+                    <input type="submit" value="Delete">
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark');
+    }
+</script>
+</body>
+</html>

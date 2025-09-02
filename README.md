@@ -1,147 +1,139 @@
-# 📸 Object & Label Detection Dashboard
+<h1 align="center"> DarshAI: Intelligent Object Labeling System </h1>
+<p align="center"> Revolutionizing image understanding with AI-powered object detection and robust management.</p>
 
-![Python Version](https://img.shields.io/badge/python-3.8+-blue) ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+<p align="center">
+  <img alt="Build" src="https://img.shields.io/badge/Build-Passing-brightgreen?style=for-the-badge">
+  <img alt="Issues" src="https://img.shields.io/badge/Issues-0%20Open-blue?style=for-the-badge">
+  <img alt="Contributions" src="https://img.shields.io/badge/Contributions-Welcome-orange?style=for-the-badge">
+  <img alt="License" src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge">
+</p>
+<!-- 
+  **Note:** These are static placeholder badges. Replace them with your project's actual badges.
+  You can generate your own at https://shields.io
+-->
 
-A Flask-based web app to upload images, auto-detect objects and labels using AWS Rekognition, store metadata in DynamoDB, and explore results on a searchable dashboard.
+## Table of Contents
+- [⭐ Overview](#-overview)
+- [✨ Key Features](#-key-features)
+- [🛠️ Tech Stack & Architecture](#️-tech-stack--architecture)
+- [🚀 Getting Started](#-getting-started)
+- [🔧 Usage](#-usage)
+- [🤝 Contributing](#-contributing)
+- [📝 License](#-license)
 
-## 🖼️ Screenshots
+## ⭐ Overview
 
-![Dashboard Screenshot](https://drive.google.com/uc?export=view&id=14JuLLgbpOFt4x07DPduIMPvF5u8pV_3C)
+DarshAI is an innovative open-source project that simplifies and automates the complex task of object and label detection in images using cutting-edge AI services. It provides a robust, web-based platform for intelligent image analysis and efficient data management.
 
-## 🌟 Features
+> In today's data-rich world, manually categorizing and searching through vast collections of images is inefficient and error-prone. Businesses, researchers, and developers need a scalable, accurate, and automated solution to derive meaningful insights and structure from visual content.
 
-*   Upload images and store in **AWS S3**
-*   Auto-detect labels using **Rekognition**
-*   Add manual tags for custom labeling
-*   Store all metadata in **DynamoDB**
-*   Search & filter images by labels or tags
-*   Dashboard stats: total images, most common label, total manual tags
-*   RESTful API for stats (`/api/stats`)
+DarshAI provides an elegant, web-based platform where users can effortlessly upload images, trigger intelligent AI analysis for object and label detection, and then efficiently search, retrieve, and manage their annotated image data. This transforms raw visual assets into structured, actionable information, drastically reducing manual effort and increasing data utility.
 
-## 🛠️ Tech Stack
+This project is built as a lightweight, Flask-based web application that serves as an intuitive interface for image management and AI interaction. It leverages `boto3` to interact seamlessly with core Amazon Web Services (AWS), including Amazon S3 for durable image storage and Amazon Rekognition for sophisticated object and label detection. Image metadata and analysis results are persistently stored, enabling robust search and management capabilities directly through the application.
 
-*   **Back-end:** Python, Flask
-*   **Front-end:** HTML5, CSS3 (inline styling)
-*   **Cloud:** AWS S3, Rekognition, DynamoDB
-*   **Env Mgmt:** `python-dotenv`
-*   **Deps:** `requirements.txt`
+## ✨ Key Features
 
-## 🔧 Prerequisites
+*   **AI-Powered Labeling:** Utilizes Amazon Rekognition to automatically identify objects, scenes, and activities within uploaded images, providing rich, descriptive labels for enhanced understanding and categorization.
+*   **Secure & Scalable Image Storage:** Integrates seamlessly with Amazon S3, offering highly durable, scalable, and secure object storage for all uploaded visual assets, ensuring data integrity and accessibility.
+*   **Intuitive Web Interface:** Offers a simple and responsive web portal (built with `index.html`) for straightforward image uploads, browsing of labeled images, and overall application management.
+*   **Advanced Search & Retrieval:** Enables users to efficiently search through stored images based on detected labels, keywords, and other metadata, making it easy to find specific visual content.
+*   **Comprehensive Image Lifecycle Management:** Provides essential functionalities to manage stored images, including viewing detailed label analysis and performing secure deletions, directly from the application's interface.
+*   **API Endpoints for Integration:** Exposes programmatic endpoints such as `/api/stats` for monitoring, and the backend functions (`search`, `delete`) hint at potential for wider integration or programmatic access to the system's capabilities.
 
-*   Python 3.8+ installed
-*   AWS account with S3, Rekognition & DynamoDB permissions
-*   Configured AWS credentials via environment variables
-*   An S3 bucket named `object-rekognition-images`
-*   A DynamoDB table `ImageLabels` with `ImageName` as primary key
+## 🛠️ Tech Stack & Architecture
 
-## ⚙️ Installation & Setup
+DarshAI is engineered with a focus on simplicity, scalability, and leveraging cloud-native services.
 
-```bash
-git clone https://github.com/Darsh-8/objectandlabeldetection.git
-```
+| Technology | Purpose | Why it was Chosen |
+| :----------------- | :----------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------- |
+| Python 3.x | Primary Programming Language | For its versatility, extensive libraries, and strong community support, especially in AI and web development. |
+| Flask | Web Framework | Chosen for its lightweight, flexible, and modular design, making it ideal for quickly building focused web applications. |
+| Boto3 | AWS SDK for Python | Enables seamless and programmatic interaction with Amazon Web Services, crucial for integrating with S3 and Rekognition. |
+| Amazon S3 | Object Storage Service | Provides highly scalable, durable, and secure object storage for all uploaded images, ensuring data integrity. |
+| Amazon Rekognition | AI Service for Image & Video Analysis | Leveraged for its powerful, pre-trained machine learning capabilities to accurately detect objects, scenes, and activities in images. |
+| HTML/CSS/JS | Frontend Design | Standard web technologies for creating the user interface (`templates/index.html`) to interact with the application. |
+| `requirements.txt` | Dependency Management | Ensures consistent environment setup across different development and deployment stages by specifying exact project dependencies. |
+| `config.py` | Configuration Management | Centralizes application settings and environment-specific variables, including sensitive AWS credentials, for easy and secure management. |
 
-```bash
-cd objectandlabeldetection
-```
+## 🚀 Getting Started
 
-```bash
-python3 -m venv venv
-```
+Follow these instructions to get a copy of DarshAI up and running on your local machine for development and testing purposes.
 
-```bash
-source venv/bin/activate
-```
+### Prerequisites
 
-```bash
-pip install -r requirements.txt
-```
+Before you begin, ensure you have the following installed:
 
-**Create a `.env` file:**
+*   **Python 3.8+**: Download from [python.org](https://www.python.org/downloads/).
+*   **AWS Account**: An active AWS account is required to use S3 and Rekognition.
+*   **AWS CLI & Credentials**: Configure your AWS credentials with sufficient permissions (S3 `PutObject`, `GetObject`, `DeleteObject`, `Rekognition` `DetectLabels`) either via `~/.aws/credentials` or environment variables. Refer to the [AWS CLI documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) for setup.
 
-```
-AWS_ACCESS_KEY_ID=YOUR_ACCESS_KEY
-AWS_SECRET_ACCESS_KEY=YOUR_SECRET_KEY
-AWS_DEFAULT_REGION=ap-south-1
-```
+### Installation
 
-## 🚀 Running the App
+1.  **Clone the Repository:**
+    ```bash
+    git clone https://github.com/your_username/Darsh-8-object-label-detection-ai-808d619.git
+    cd Darsh-8-object-label-detection-ai-808d619
+    ```
 
-```bash
-export FLASK_APP=app.py
-```
+2.  **Create a Virtual Environment:**
+    It's recommended to use a virtual environment to manage dependencies.
+    ```bash
+    python -m venv venv
+    ```
 
-```bash
-export FLASK_ENV=development
-```
+3.  **Activate the Virtual Environment:**
+    *   **On macOS/Linux:**
+        ```bash
+        source venv/bin/activate
+        ```
+    *   **On Windows:**
+        ```bash
+        .\venv\Scripts\activate
+        ```
 
-```bash
-flask run
-```
+4.  **Install Dependencies:**
+    Install all required Python packages using pip:
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-**Or simply:**
+5.  **Configure AWS (if not already done via CLI):**
+    Ensure your `config.py` or environment variables are set up with your AWS region and credentials. DarshAI will automatically use credentials configured in your environment or `~/.aws/credentials`.
 
-```bash
-python app.py
-```
+## 🔧 Usage
 
-## 📂 Project Structure
+Once the installation is complete, you can run the DarshAI application.
 
-```
+1.  **Start the Flask Application:**
+    Ensure your virtual environment is active.
+    ```bash
+    python app.py
+    ```
+    The application will typically run on `http://127.0.0.1:5000/`.
 
-object-label-detection-ai/
-├── aws_handlers/
-│   └── aws_functions.py       # AWS integration logic
-├── app.py                     # Flask app runner
-├── config.py                  # AWS keys and config
-├── templates/
-│   └── index.html             # Dashboard UI
-├── requirements.txt
-├── README.md
-```
+2.  **Access the Web Interface:**
+    Open your web browser and navigate to `http://127.0.0.1:5000/` to access the DarshAI dashboard (`index.html`). Here you can upload images, view detected labels, and manage your image collection.
 
-## 🔍 Usage Examples
-
-*   Upload an image to auto-detect labels
-*   Enter comma-separated manual tags
-*   Search for images by label or tag
-*   API: `GET /api/stats`
-
-```json
-
-{
-  "total_images": 42,
-  "most_common_label": "Person",
-  "total_manual_tags": 17
-}
-```
-
-## 🚫 No Live Deployment
-
-This application is currently **not hosted online**. To use it, follow the setup steps and run it locally.
-
-## ⚠️ Limitations
-
-*   No video or batch uploads — only single image upload
-*   No confidence threshold control for label filtering
-*   Dashboard lacks pagination or delete functionality
-*   Open access — no user authentication or roles
-
-## 🗺️ Roadmap
-
-*   Add pagination to dashboard
-*   Enable threshold-based filtering for labels
-*   Add image delete functionality
-*   Introduce user authentication (login/signup)
-*   Allow export of metadata (CSV or JSON)
+3.  **Interact with API Endpoints (Example):**
+    You can also interact with some backend functionalities via API calls. For instance, to get basic application statistics:
+    ```bash
+    curl http://127.0.0.1:5000/api/stats
+    ```
+    Further API interactions for searching or deleting images can be explored through the web interface or by inspecting network requests.
 
 ## 🤝 Contributing
 
-Pull requests, issues, and forks are welcome. Feel free to improve features or fix bugs by submitting a PR.
+We welcome contributions to DarshAI! Whether it's adding new features, improving documentation, or fixing bugs, your help is appreciated.
 
-## 📄 License
+To contribute:
 
-Licensed under the MIT License. See `LICENSE` for more details.
+1.  **Fork** the repository.
+2.  **Create a new branch** for your feature or bug fix: `git checkout -b feature/your-feature-name` or `bugfix/issue-description`.
+3.  **Make your changes**, ensuring code quality and consistency.
+4.  **Commit your changes** with a clear and descriptive message.
+5.  **Push your branch** to your forked repository.
+6.  **Open a Pull Request** to the `main` branch of the original repository, describing your changes in detail.
 
-- - -
+## 📝 License
 
-Built with ❤️ by [Darsh Thakkar](https://github.com/Darsh-8) using Flask & AWS Rekognition.
+Distributed under the MIT License. See `LICENSE` for more information.
